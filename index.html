@@ -9,7 +9,30 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <header>
+        <h1>GitHub User Repo Search</h1>
+        <h3>Search for a GitHub user to get a list of all of the users repos.</h3>
+    </header>
+
+    <form class="githubUserForm">
+        <div class="githubUserFormContainer">
+            <label for="githubUserName">GitHub UserName:</label>
+            <input type="text" class="githubUserInput" id="githubUserName" name="username">
+            <button type='submit'>Get Repos!</button>
+        </div>
+    </form>
+
+    <section class="userReposContainer hidden">
+        <ul id="userRepos">
+
+        </ul>
+    </section>
     
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
     <script src="index.js"></script>
 </body>
 </html>
