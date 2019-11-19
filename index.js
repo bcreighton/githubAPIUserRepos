@@ -1,12 +1,29 @@
 const searchUrl = 'https://api.github.com/users/';
 
 function displayUserRepos(userRepos, user) {
-    console.log(`Displaying ${user}'s repos...`);
+    //remove previous results
+    $('#userRepos').empty();
+
+    //populate new results
+    //iterate through json data
+
+    for(let i = 0; i < userRepos.length; i++) {
+        $('#userRepos').append(
+            `<li class='repo'>
+                <h3 class='repoTitle'>
+                    <a href=${userRepos[i].html_url}>
+                        ${userRepos[i].name}
+                    </a>
+                </h3>
+                <p class='repoDescription'><span>Description: </span>${userRepos[i].description}</p>
+            </li>`
+        )
+    }
+    $('#userReposContainer').removeClass('hidden');
 
 }
 
 function getRepos(user) {
-    console.log('Generating repos...');
     const url = searchUrl + user + '/repos';
 
     const fetchRepos = async () => {
@@ -16,7 +33,6 @@ function getRepos(user) {
             if(repoRes.ok){
                 const userRepos = await repoRes.json();
                 displayUserRepos(userRepos, user);
-                console.log(userRepos);
 
             } else {
                 throw new Error(repoRes.statusText);
@@ -24,7 +40,9 @@ function getRepos(user) {
 
         } catch(e) {
             const errorMessage = (e.message).toLowerCase();
-            console.log(`${user} was ${errorMessage}; please try again.`);
+            $('#userRepos').html(
+                `<p class='error'>${user} was ${errorMessage}; please try again.</p>`
+            )
         }
     }
 
@@ -36,7 +54,6 @@ function watchForm() {
         event.preventDefault();
         const userName = $('#githubUserName').val();
         getRepos(userName);
-        console.log('Listening to form...');
     })
 }
 
